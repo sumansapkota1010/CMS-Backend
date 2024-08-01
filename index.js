@@ -1,12 +1,15 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const Blog = require("./model/blogModel");
+const cors = require("cors");
 require("dotenv").config();
 const app = express();
 
 // node js lai form bata aako data parse gar bhaneko ho
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -77,7 +80,8 @@ app.post("/createBlog", async (req, res) => {
     description: description,
   });
 
-  res.status(200).json({
+  res.json({
+    status: 200,
     message: "Blog created Successfully",
   });
 });
@@ -85,17 +89,12 @@ app.post("/createBlog", async (req, res) => {
 // single chij edit garna paryo bhane...Edit blog
 
 app.patch("/blogs/:id", async (req, res) => {
-  const { title, subTitle, description } = req.body;
-  const { id } = req.params;
+  const id = req.params.id;
+  const title = req.body.title;
+  const subTitle = req.body.subTitle;
+  const description = req.body.description;
 
-  const blogFound = await Blog.find({
-    id: id,
-  });
-  if (blogFound.length == 0) {
-    return res.json({
-      message: "No blog found with that id",
-    });
-  }
+  // const {title,subTitle,description} = req.body  ALTERNATIVE
 
   await Blog.findByIdAndUpdate(id, {
     title: title,
@@ -104,10 +103,9 @@ app.patch("/blogs/:id", async (req, res) => {
   });
 
   res.status(200).json({
-    message: "Blog updated successfully",
+    message: "Blog updated Succesfully",
   });
 });
-
 // sabai ekaichoti edit garna paryo bhaney
 
 app.put("/blogs/:id", async (req, res) => {
