@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 // GET API => /blogs(All blogs)
 
-app.get("/blogs", async (req, res) => {
+app.get("/api/blogs", async (req, res) => {
   // fetching/reading all blogs from blog model
   const blogs = await Blog.find();
   if (blogs.length == 0) {
@@ -45,7 +45,7 @@ app.get("/blogs", async (req, res) => {
 
 //GET API => /blogs/:id (single blogs)
 
-app.get("/blogs/:id", async (req, res) => {
+app.get("/api/blogs/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -69,7 +69,7 @@ app.get("/blogs/:id", async (req, res) => {
   }
 });
 // Create Blog API
-app.post("/createBlog", async (req, res) => {
+app.post("/api/createBlog", async (req, res) => {
   console.log(req.body);
   const { title, subTitle, description } = req.body;
 
@@ -88,7 +88,7 @@ app.post("/createBlog", async (req, res) => {
 
 // single chij edit garna paryo bhane...Edit blog
 
-app.patch("/blogs/:id", async (req, res) => {
+app.patch("/api/blogs/:id", async (req, res) => {
   const id = req.params.id;
   const title = req.body.title;
   const subTitle = req.body.subTitle;
@@ -108,7 +108,7 @@ app.patch("/blogs/:id", async (req, res) => {
 });
 // sabai ekaichoti edit garna paryo bhaney
 
-app.put("/blogs/:id", async (req, res) => {
+app.put("/api/blogs/:id", async (req, res) => {
   const { title, subTitle, description } = req.body;
   const { id } = req.params;
 
@@ -131,7 +131,7 @@ app.put("/blogs/:id", async (req, res) => {
 });
 
 // delete
-app.delete("/blogs/:id", async (req, res) => {
+app.delete("/api/blogs/:id", async (req, res) => {
   const { id } = req.params;
 
   await Blog.findByIdAndDelete(id);
@@ -139,7 +139,10 @@ app.delete("/blogs/:id", async (req, res) => {
     message: "Blog deleted successfully",
   });
 });
+const PORT = process.env.PORT || 8000;
 
-app.listen(8000, () => {
-  console.log("Server has started at port 8000");
+app.listen(PORT, () => {
+  console.log(`Server has started at port ${PORT}`);
 });
+
+module.exports = app;
