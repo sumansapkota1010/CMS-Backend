@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node": "20.x"
+    "node": "20git.x"
   },
   "scripts": {
-    "start": "nodemon api/index.js"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

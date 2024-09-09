@@ -1,6 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const Blog = require("../model/blogModel");
+const Blog = require("./model/blogModel");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
@@ -22,13 +22,13 @@ mongoose
 
 // GET API
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
 // GET API => /blogs(All blogs)
 
-app.get("/api/blogs", async (req, res) => {
+app.get("/blogs", async (req, res) => {
   // fetching/reading all blogs from blog model
   const blogs = await Blog.find();
   if (blogs.length == 0) {
@@ -45,7 +45,7 @@ app.get("/api/blogs", async (req, res) => {
 
 //GET API => /blogs/:id (single blogs)
 
-app.get("/api/blogs/:id", async (req, res) => {
+app.get("/blogs/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -69,7 +69,7 @@ app.get("/api/blogs/:id", async (req, res) => {
   }
 });
 // Create Blog API
-app.post("/api/createBlog", async (req, res) => {
+app.post("/createBlog", async (req, res) => {
   console.log(req.body);
   const { title, subTitle, description } = req.body;
 
@@ -88,7 +88,7 @@ app.post("/api/createBlog", async (req, res) => {
 
 // single chij edit garna paryo bhane...Edit blog
 
-app.patch("/api/blogs/:id", async (req, res) => {
+app.patch("/blogs/:id", async (req, res) => {
   const id = req.params.id;
   const title = req.body.title;
   const subTitle = req.body.subTitle;
@@ -108,7 +108,7 @@ app.patch("/api/blogs/:id", async (req, res) => {
 });
 // sabai ekaichoti edit garna paryo bhaney
 
-app.put("/api/blogs/:id", async (req, res) => {
+app.put("/blogs/:id", async (req, res) => {
   const { title, subTitle, description } = req.body;
   const { id } = req.params;
 
@@ -131,7 +131,7 @@ app.put("/api/blogs/:id", async (req, res) => {
 });
 
 // delete
-app.delete("/api/blogs/:id", async (req, res) => {
+app.delete("/blogs/:id", async (req, res) => {
   const { id } = req.params;
 
   await Blog.findByIdAndDelete(id);
