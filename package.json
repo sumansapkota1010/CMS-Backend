@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
-    "node": "20git.x"
+    "node": "20.x"
   },
   "scripts": {
     "start": "nodemon index.js"
