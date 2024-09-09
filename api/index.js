@@ -1,6 +1,6 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const Blog = require("./model/blogModel");
+const Blog = require("../model/blogModel");
 const cors = require("cors");
 require("dotenv").config();
 const app = express();
